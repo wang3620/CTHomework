@@ -5,12 +5,12 @@ const CreateButton = (props) => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Content of the modal');
   const showModal = () => {
     setOpen(true);
   };
   const handleOk = () => {
     form.validateFields().then(values => {
+      setConfirmLoading(true);
       axios.post('http://localhost:8080/v1/address', values, {headers: {
         'Content-Type': 'application/json'
       }})
@@ -21,20 +21,21 @@ const CreateButton = (props) => {
         })
         .catch(function (err) {
           message.error(err.toString());
-        });
+        }).finally(() => {
+          setConfirmLoading(false);
+      });
     }).catch(err => console.log(err.toString()));
   };
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   };
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Create
+      <Button type="primary" onClick={showModal} style={{marginBottom: "20px"}}>
+        Add
       </Button>
       <Modal
-        title="Title"
+        title="Add New Address"
         open={open}
         onOk={handleOk}
         confirmLoading={confirmLoading}

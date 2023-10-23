@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, message, Space, Table} from 'antd';
+import {Button, message, Popconfirm, Space, Table} from 'antd';
 import axios from "axios";
 import CreateButton from "./CreateButton";
 
@@ -42,16 +42,25 @@ class AddressList extends React.Component {
       },
       {
         title: 'Action',
-        render: (text, record) => <Button danger onClick={() => {
-          axios({
-            method: 'delete',
-            url: `http://localhost:8080/v1/address/${record.address_id}`,
-          })
-            .then( () => {
-              message.success("success")
-              this.fetchData();
-            });
-        }}>Delete</Button>
+        render: (text, record) =>
+          <Popconfirm
+            title="Delete the address"
+            description="Are you sure to delete this address?"
+            onConfirm={() => {
+                axios({
+                  method: 'delete',
+                  url: `http://localhost:8080/v1/address/${record.address_id}`,
+                })
+                  .then( () => {
+                    message.success("success")
+                    this.fetchData();
+                  }).catch((err) => message.error(err.toString()));
+            }}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
       }
     ];
     return (

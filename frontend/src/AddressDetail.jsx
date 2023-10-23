@@ -11,13 +11,14 @@ const AddressDetail = ({addressID}) => {
       setTransactions(res.data.txs);
       setFinalBalance(res.data.final_balance);
     }).catch(err => message.error(err.toString())).finally(() => setLoading(false));
-  }, []);
+  }, [addressID]);
   const columns = [{
     title: 'Transaction ID',
     dataIndex: 'transaction_id'
   }];
   return(
     <div>
+      <h3>Bitcoin Address: {addressID}</h3>
       <h3>Current Balance: {finalBalance}</h3>
       <Table loading={loading} dataSource={transactions} columns={columns} />
     </div>

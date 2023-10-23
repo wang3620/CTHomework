@@ -4,7 +4,7 @@ import {
   UserOutlined,
   DesktopOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import AddressList from "./AddressList";
 import AddressDetail from "./AddressDetail";
 const { Header, Content, Footer, Sider } = Layout;
@@ -40,7 +40,6 @@ const App = () => {
   } = theme.useToken();
 
   const generateContent = () => {
-    console.log(selectedKeyPath[selectedKeyPath.length - 1]);
     switch (selectedKeyPath[selectedKeyPath.length - 1]) {
       case 'address':
         return <AddressDetail addressID={selectedKeyPath[0]} />
