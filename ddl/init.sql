@@ -8,7 +8,8 @@ create table address
         primary key,
     description   varchar(255) null,
     user_id       int          null,
-    final_balance int          null
+    final_balance int          null,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
 
@@ -20,6 +21,7 @@ create table transaction
         primary key,
     address_id     varchar(255)                 null,
     metadata       longtext collate utf8mb4_bin null,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     constraint metadata
         check ()
 );

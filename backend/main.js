@@ -82,7 +82,8 @@ app.delete('/v1/address/:address_id', async (req, res) => {
       return res.status(404).json({ error: 'Address not found' });
     }
 
-    // todo -- consider delete related transactions as well
+    const queryTransaction = 'DELETE FROM transaction WHERE address_id = ?';
+    await conn.query(queryTransaction, [address_id]);
 
     res.json({ message: 'Address deleted successfully' });
   } catch (error) {
